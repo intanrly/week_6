@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input URL dan Tampilkan dalam Tabel</title>
+</head>
+<body>
+    <h1>Masukkan URL</h1>
+    <form id="urlForm">
+        <label for="urlInput">URL:</label>
+        <input type="text" id="urlInput" name="url">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Hasil</h2>
+    <div id="result">
+        <!-- Data tabel akan ditampilkan di sini -->
+    </div>
+
+    <script>
+        document.getElementById("urlForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Dapatkan nilai URL yang dimasukkan oleh pengguna
+            var url = document.getElementById("urlInput").value;
+
+            // Buat permintaan HTTP untuk mengambil data dari URL
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    // Buat tabel HTML dari data yang diterima
+                    var table = "<table border='1'><tr><th>Data</th></tr>";
+                    table += "<tr><td>" + data + "</td></tr>";
+                    table += "</table>";
+
+                    // Tampilkan tabel dalam elemen dengan id "result"
+                    document.getElementById("result").innerHTML = table;
+                })
+                .catch(error => {
+                    // Tangani kesalahan jika ada
+                    console.error("Kesalahan:", error);
+                    document.getElementById("result").innerHTML = "Terjadi kesalahan. Pastikan URL yang Anda masukkan benar.";
+                });
+        });
+    </script>
+</body>
+</html>
